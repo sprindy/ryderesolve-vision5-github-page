@@ -47,7 +47,6 @@ async def lifespan(app):
 app=FastAPI(title='RydeResolve · LangGraph Final Demo',lifespan=lifespan)
 DEFAULT_CORS_ORIGINS = 'http://127.0.0.1:5173,http://localhost:5173,https://sprindy.github.io'
 CORS_ORIGINS = [origin.strip().rstrip('/') for origin in os.getenv('CORS_ORIGINS', DEFAULT_CORS_ORIGINS).split(',') if origin.strip()]
-app.add_middleware(CORSMiddleware,allow_origins=CORS_ORIGINS,allow_methods=['GET','POST'],allow_headers=['Content-Type','X-Admin-Token','Authorization'])
 @app.middleware('http')
 async def demo_identity(request,call_next):
     path=request.url.path
@@ -62,6 +61,11 @@ async def demo_identity(request,call_next):
     if path in ('/','/rider','/driver','/admin') or path.endswith(('.html','.js')):
         response.headers['Cache-Control']='no-store'
     return response
+
+# Starlette inserts each middleware at the front of the stack. Register CORS
+# last so it handles browser preflight before demo authentication and adds
+# CORS headers to authentication errors. Actual API requests remain protected.
+app.add_middleware(CORSMiddleware,allow_origins=CORS_ORIGINS,allow_methods=['GET','POST'],allow_headers=['Content-Type','X-Admin-Token','Authorization'])
 
 @app.get('/api/demo/session')
 def session_status():
