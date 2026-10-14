@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+backend/.env
+*.db
+*.sqlite3
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+.DS_Store
+_site/
+.env

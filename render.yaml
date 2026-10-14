@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: ryderesolve-vision5-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: python -m uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: AGENT_MODE
+        value: deterministic
+      - key: CORS_ORIGINS
+        value: https://sprindy.github.io,http://127.0.0.1:5173,http://localhost:5173
+      - key: RYDE_DB_PATH
+        value: /tmp/ryderesolve/demo.sqlite
+      - key: DEMO_CONTROLS
+        value: "1"
+      - key: EVIDENCE_REQUIRED_TIMEOUT
+        value: finalize

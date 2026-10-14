@@ -1,0 +1,10 @@
+{
+  "repository": "sprindy/ryde-dispute-agent",
+  "branch": "vision5-langgraph-demo",
+  "commit": "fa9252408f55aba7937fb76a72508697c4162d0b",
+  "source_directory": "ryderesolve-vision5",
+  "destination_layout": "app files at repository root",
+  "changes": ["GitHub Pages packaging", "Render free-tier blueprint", "configurable backend URL", "explicit Pages CORS origin"],
+  "runtime_data_included": false,
+  "secrets_included": false
+}
